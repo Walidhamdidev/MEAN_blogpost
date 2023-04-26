@@ -1,0 +1,25 @@
+# Node.js
+node_modules/
+npm-debug.log
+
+# Config files
+/config/default.json
+/config/production.json
+
+# Environment variables
+.env
+
+# IDE
+.idea/
+
+# Logs
+logs
+*.log
+
+# Test results
+/coverage/
+.nyc_output/
+
+# Misc
+.DS_Store
+Thumbs.db

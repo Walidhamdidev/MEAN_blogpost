@@ -1,0 +1,5 @@
+{
+  "PORT": "3000",
+  "MONGO_URI": "mongodb+srv://walidhamdidev:wuZYw9JPSsdeaUwq@cluster0.exv2qdb.mongodb.net/test",
+  "JWT_SECRET": "5a464a4da4f44bf69598dfb0c07161f1986c2779c8fded61ee593c3ba59d1723"
+}
