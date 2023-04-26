@@ -5,7 +5,6 @@ npm-debug.log
 # Config files
 /config/default.json
 /config/production.json
-
 # Environment variables
 .env
 
