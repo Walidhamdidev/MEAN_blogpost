@@ -11,4 +11,4 @@ app.use(express.json());
 
 config(app);
 db(app);
-routes(app);
+routes(app, express);

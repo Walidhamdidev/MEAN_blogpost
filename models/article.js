@@ -5,17 +5,21 @@ const ArticleSchema = new mongoose.Schema(
     title: {
       type: String,
     },
+    idAuthor: {
+      type: String,
+    },
     description: {
       type: String,
     },
-    category: {
+
+    content: {
       type: String,
     },
-    picture: {
+    image: {
       type: String,
     },
-    author: {
-      type: String,
+    tags: {
+      type: Array,
     },
   },
   { timestamps: true }

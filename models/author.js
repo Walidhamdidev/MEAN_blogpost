@@ -12,6 +12,9 @@ const AuthorSchema = new mongoose.Schema(
     password: {
       type: String,
     },
+    about: {
+      type: String,
+    },
     photo: {
       type: String,
     },
