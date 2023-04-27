@@ -7,8 +7,8 @@ const router = express.Router();
 
 router.get("/:id", article.getOne);
 router.get("/", article.getAll);
-router.post("/", fileUploadMiddleware(), article.addArticle);
+router.post("/", fileUploadMiddleware("./uploads/article"), article.addArticle);
 router.delete("/:id", article.deleteArticle);
-router.put("/:id", fileUploadMiddleware(), article.update);
+router.put("/:id", fileUploadMiddleware("./uploads/article"), article.update);
 
 export default router;

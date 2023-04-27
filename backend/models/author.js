@@ -15,7 +15,7 @@ const AuthorSchema = new mongoose.Schema(
     about: {
       type: String,
     },
-    photo: {
+    image: {
       type: String,
     },
   },
