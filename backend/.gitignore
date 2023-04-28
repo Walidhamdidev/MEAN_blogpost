@@ -2,10 +2,14 @@
 node_modules/
 npm-debug.log
 
-# Config files
+# Ignore production config
 /config/production.json
-# Environment variables
-.env
+
+# Ignore production env variables
+/.env.production
+
+# Ignore package-lock.json
+/package-lock.json
 
 # IDE
 .idea/

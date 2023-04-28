@@ -1,11 +1,10 @@
 import Author from "../models/author.js";
 import JWT from "jsonwebtoken";
-import config from "config";
 import bcrypt from "bcrypt";
 import fs from "fs";
 
 const generateToken = (payload) => {
-  const JWTSecret = config.get("JWT_SECRET");
+  const JWTSecret = process.env.JWT_SECRET;
   const token = JWT.sign(payload, JWTSecret, { expiresIn: "3d" });
   return token;
 };

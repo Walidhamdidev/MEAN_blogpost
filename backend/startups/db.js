@@ -1,9 +1,8 @@
 import mongoose from "mongoose";
-import config from "config";
 
 export default async function db(app) {
-  const PORT = config.get("PORT");
-  const MONGO_URI = config.get("MONGO_URI");
+  const PORT = process.env.PORT;
+  const MONGO_URI = process.env.MONGO_URI;
 
   try {
     await mongoose.connect(MONGO_URI);
