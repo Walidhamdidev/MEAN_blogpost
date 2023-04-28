@@ -1,6 +1,6 @@
 import customConfig from "config";
 
-export default function configApp(app) {
+export default function config(app) {
   if (!customConfig.get("JWT_SECRET")) {
     throw new Error("FATAL ERROR: jwtPrivateKey is not defined.");
   }
