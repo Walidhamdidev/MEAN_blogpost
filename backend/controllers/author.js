@@ -123,9 +123,7 @@ const getAll = async (req, res) => {
   }
 };
 
-// TODO: update author
-// finish article API
-
+// TODO: Update Author / Article
 const updateAuthor = async (req, res) => {
   const { id } = req.params;
   const data = req.body;
@@ -179,7 +177,6 @@ const deleteAuthor = async (req, res) => {
       });
     console.log(author.image);
     if (NODE_ENV === "production") {
-      console.log(JSON.parse(author.image));
       cloudinary.deleteImage(JSON.parse(author.image).public_id);
     } else {
       localStorage.removeImage("author", author);

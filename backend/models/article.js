@@ -7,7 +7,8 @@ const ArticleSchema = new mongoose.Schema(
       required: true,
     },
     authorId: {
-      type: String,
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Author",
       required: true,
     },
     description: {

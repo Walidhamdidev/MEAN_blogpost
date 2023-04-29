@@ -1,24 +1,24 @@
 import fs from "fs";
 
-const removeImage = (path, author) => {
-  fs.unlink(`./uploads/${path}/${author.image}`, (err) => {
+const removeImage = (path, model) => {
+  fs.unlink(`./uploads/${path}/${model.image}`, (err) => {
     if (err) {
       console.error(err);
       return;
     }
-    console.log(`${author.image} has been deleted`);
+    console.log(`${model.image} has been deleted`);
   });
 };
 
-const updateImage = (path, author, newImage) => {
+const updateImage = (path, model, newImage) => {
   // Remove the old image
-  if (author.image) {
-    fs.unlinkSync(`./uploads/${path}/${author.image}`);
+  if (model.image) {
+    fs.unlinkSync(`./uploads/${path}/${model.image}`);
   }
 
   // Save the new image
   const extension = newImage.name.split(".").pop();
-  const fileName = `${author._id}.${extension}`;
+  const fileName = `${model._id}.${extension}`;
   newImage.mv(`./uploads/${path}/${fileName}`);
 
   // Return the updated image filename
