@@ -18,10 +18,29 @@ import { CoverComponent } from './pages/home/cover/cover.component';
 import { BlogListComponent } from './pages/home/blog-list/blog-list.component';
 import { ContactComponent } from './pages/contact/contact.component';
 import { ArchiveComponent } from './pages/archive/archive.component';
+import { FormsModule } from '@angular/forms';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
-  declarations: [AppComponent, HeaderComponent, FooterComponent, AboutComponent, AuthorComponent, CreatearticleComponent, HomeComponent, ArticledetailComponent, LoginComponent, RegisterComponent, NotfoundComponent, PrivacyComponent, CoverComponent, BlogListComponent, ContactComponent, ArchiveComponent],
-  imports: [BrowserModule, AppRoutingModule],
+  declarations: [
+    AppComponent,
+    HeaderComponent,
+    FooterComponent,
+    AboutComponent,
+    AuthorComponent,
+    CreatearticleComponent,
+    HomeComponent,
+    ArticledetailComponent,
+    LoginComponent,
+    RegisterComponent,
+    NotfoundComponent,
+    PrivacyComponent,
+    CoverComponent,
+    BlogListComponent,
+    ContactComponent,
+    ArchiveComponent,
+  ],
+  imports: [BrowserModule, AppRoutingModule, FormsModule, HttpClientModule],
   providers: [],
   bootstrap: [AppComponent],
 })

@@ -18,7 +18,7 @@ const routes: Routes = [
   { path: 'about', component: AboutComponent },
   { path: 'archive', component: ArchiveComponent },
   { path: 'contact', component: ContactComponent },
-  { path: 'author', component: AuthorComponent },
+  { path: 'author/:id', component: AuthorComponent },
   { path: 'createarticle', component: CreatearticleComponent },
   { path: 'articledetails', component: ArticledetailComponent },
   { path: 'login', component: LoginComponent },

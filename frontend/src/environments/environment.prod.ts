@@ -1,3 +1,4 @@
 export const environment = {
-  production: true
+  production: true,
+  BLOGPOST_API: 'https://mean-blogpost.onrender.com/api',
 };

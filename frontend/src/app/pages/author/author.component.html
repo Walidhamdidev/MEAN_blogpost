@@ -1,76 +1,35 @@
 <section class="page-header section-sm">
   <div class="container">
-    <div class="row">
-      <div class="col-lg-12 text-center">
-        <h1 class="section-title h2 mb-3">
-          <span>Author</span>
-        </h1>
-        <ul class="list-inline breadcrumb-menu mb-3">
-          <li class="list-inline-item">
-            <a href="index-2.html"
-              ><i class="ti ti-home"></i> <span>Home</span></a
-            >
-          </li>
-          <li class="list-inline-item">
-            • &nbsp; <a href="author.html"><span>Author</span></a>
-          </li>
-        </ul>
-      </div>
-    </div>
-  </div>
-</section>
-
-<section class="section-sm pt-0 mt-3">
-  <div class="container">
-    <div class="row">
-      <div class="col-lg-10 mx-auto">
-        <div class="row gx-4 gy-5 gx-md-5 justify-content-center text-center">
-          <div class="col-md-4 col-sm-6">
-            <a class="d-inline-block is-hoverable" href="author-single.html">
-              <img
-                class="img-fluid rounded"
-                src="assets/assets/images/author/chris-impey.jpg"
-                alt="Chris Impey"
-                width="150"
-                height="150"
-              />
-              <h4 class="text-dark mt-4 mb-1">Chris Impey</h4>
-              <p class="mb-0">
-                <span class="fw-bold text-black">04</span> Published posts
-              </p>
-            </a>
+    <div class="row justify-content-center">
+      <div class="col-lg-10">
+        <div
+          class="row g-4 g-lg-5 text-center text-lg-start justify-content-center justify-content-lg-start"
+        >
+          <div class="col-lg-3 col-md-4 col-sm-5 col-6">
+            <img
+              class="img-fluid rounded"
+              src="assets/assets/images/author/thomas-macaulay.jpg"
+              alt="Thomas Macaulay"
+              width="250"
+              height="250"
+            />
           </div>
-
-          <div class="col-md-4 col-sm-6">
-            <a class="d-inline-block is-hoverable" href="author-single.html">
-              <img
-                class="img-fluid rounded"
-                src="assets/assets/images/author/emma-hazel.jpg"
-                alt="Emma Hazel"
-                width="150"
-                height="150"
-              />
-              <h4 class="text-dark mt-4 mb-1">Emma Hazel</h4>
-              <p class="mb-0">
-                <span class="fw-bold text-black">02</span> Published posts
+          <div class="col-lg-9 col-md-12">
+            <p class="mb-2">
+              <span class="fw-bold text-black">03</span> Published posts
+            </p>
+            <h1 class="h3 text-dark mb-3">{{ author.username }}</h1>
+            <div class="content">
+              <p>
+                {{ author.about }}
               </p>
-            </a>
-          </div>
-
-          <div class="col-md-4 col-sm-6">
-            <a class="d-inline-block is-hoverable" href="author-single.html">
-              <img
-                class="img-fluid rounded"
-                src="assets/assets/images/author/thomas-macaulay.jpg"
-                alt="Thomas Macaulay"
-                width="150"
-                height="150"
-              />
-              <h4 class="text-dark mt-4 mb-1">Thomas Macaulay</h4>
-              <p class="mb-0">
-                <span class="fw-bold text-black">03</span> Published posts
+              <p>
+                Follow him
+                <a target="_blank" href="https://twitter.com/thomas-macaulay"
+                  >on Twitter</a
+                >.
               </p>
-            </a>
+            </div>
           </div>
         </div>
       </div>
@@ -79,483 +38,78 @@
 </section>
 
 <div class="container">
-  <div class="row">
-    <div class="col-12"><hr class="bg-primary" /></div>
+  <div class="row gy-5 gx-4 g-xl-5">
+    <div *ngFor="let article of authorArticles" class="col-lg-6">
+      <article class="card post-card h-100 border-0 bg-transparent">
+        <div class="card-body">
+          <a
+            class="d-block"
+            href="blog-single.html"
+            title="{{ article.title }}"
+          >
+            <div class="post-image position-relative">
+              <img
+                class="w-100 h-auto rounded"
+                [src]="article.image"
+                [alt]="article.about"
+                width="970"
+                height="500"
+              />
+            </div>
+          </a>
+          <ul class="card-meta list-inline mb-3">
+            <li class="list-inline-item mt-2">
+              <i class="ti ti-calendar-event"></i>
+              <span>05 Dec, 2021</span>
+            </li>
+            <li class="list-inline-item mt-2">—</li>
+            <li class="list-inline-item mt-2">
+              <i class="ti ti-clock"></i>
+              <span>02 min read</span>
+            </li>
+          </ul>
+          <a
+            class="d-block"
+            href="blog-single.html"
+            title="{{ article.title }}"
+          >
+            <h3 class="mb-3 post-title">
+              {{ article.title }}
+            </h3>
+          </a>
+          <p>
+            {{ article.about }}
+          </p>
+        </div>
+        <div class="card-footer border-top-0 bg-transparent p-0">
+          <ul class="card-meta list-inline">
+            <li class="list-inline-item mt-2">
+              <!-- <a
+                href="author-single.html"
+                class="card-meta-author"
+                title="Read all posts by {{ author.username }}"
+              >
+                <img
+                  class="w-auto"
+                  [src]="author.image"
+                  [alt]="author.username"
+                  width="26"
+                  height="26"
+                />
+                by <span>{{ author.username }}</span>
+              </a> -->
+            </li>
+            <li class="list-inline-item mt-2">•</li>
+            <li class="list-inline-item mt-2">
+              <ul class="card-meta-tag list-inline">
+                <li class="list-inline-item small">
+                  <a href="tag-single.html">Machine</a>
+                </li>
+              </ul>
+            </li>
+          </ul>
+        </div>
+      </article>
+    </div>
   </div>
 </div>
-
-<section class="section-sm pb-0">
-  <div class="container">
-    <div class="row">
-      <div class="col-12 text-center">
-        <h2 class="section-title">
-          <span>Recent posts</span>
-        </h2>
-      </div>
-    </div>
-    <div class="row gy-5 gx-4 g-xl-5">
-      <div class="col-lg-6">
-        <article class="card post-card h-100 border-0 bg-transparent">
-          <div class="card-body">
-            <a
-              class="d-block"
-              href="blog-single.html"
-              title="The AGI hype train is running out of steam"
-            >
-              <div class="post-image position-relative">
-                <img
-                  class="w-100 h-auto rounded"
-                  src="assets/assets/images/blog/02.jpg"
-                  alt="The AGI hype train is running out of steam"
-                  width="970"
-                  height="500"
-                />
-              </div>
-            </a>
-            <ul class="card-meta list-inline mb-3">
-              <li class="list-inline-item mt-2">
-                <i class="ti ti-calendar-event"></i>
-                <span>05 Dec, 2021</span>
-              </li>
-              <li class="list-inline-item mt-2">—</li>
-              <li class="list-inline-item mt-2">
-                <i class="ti ti-clock"></i>
-                <span>02 min read</span>
-              </li>
-            </ul>
-            <a
-              class="d-block"
-              href="blog-single.html"
-              title="The AGI hype train is running out of steam"
-            >
-              <h3 class="mb-3 post-title">
-                The AGI hype train is running out of steam
-              </h3>
-            </a>
-            <p>
-              The AGI hype train has hit some heavy traffic. While futurists and
-              fundraisers used to make bullish predictions about artificial
-              general intelligence, …
-            </p>
-          </div>
-          <div class="card-footer border-top-0 bg-transparent p-0">
-            <ul class="card-meta list-inline">
-              <li class="list-inline-item mt-2">
-                <a
-                  href="author-single.html"
-                  class="card-meta-author"
-                  title="Read all posts by - Thomas Macaulay"
-                >
-                  <img
-                    class="w-auto"
-                    src="assets/assets/images/author/thomas-macaulay.jpg"
-                    alt="Thomas Macaulay"
-                    width="26"
-                    height="26"
-                  />
-                  by <span>Thomas</span>
-                </a>
-              </li>
-              <li class="list-inline-item mt-2">•</li>
-              <li class="list-inline-item mt-2">
-                <ul class="card-meta-tag list-inline">
-                  <li class="list-inline-item small">
-                    <a href="tag-single.html">Machine</a>
-                  </li>
-                </ul>
-              </li>
-            </ul>
-          </div>
-        </article>
-      </div>
-      <div class="col-lg-6">
-        <article class="card post-card h-100 border-0 bg-transparent">
-          <div class="card-body">
-            <a
-              class="d-block"
-              href="blog-single.html"
-              title="Creating an object that travels at 1% the speed of light?"
-            >
-              <div class="post-image position-relative">
-                <img
-                  class="w-100 h-auto rounded"
-                  src="assets/assets/images/blog/03.jpg"
-                  alt="Creating an object that travels at 1% the speed of light?"
-                  width="970"
-                  height="500"
-                />
-              </div>
-            </a>
-            <ul class="card-meta list-inline mb-3">
-              <li class="list-inline-item mt-2">
-                <i class="ti ti-calendar-event"></i>
-                <span>17 Nov, 2021</span>
-              </li>
-              <li class="list-inline-item mt-2">—</li>
-              <li class="list-inline-item mt-2">
-                <i class="ti ti-clock"></i>
-                <span>02 min read</span>
-              </li>
-            </ul>
-            <a
-              class="d-block"
-              href="blog-single.html"
-              title="Creating an object that travels at 1% the speed of light?"
-            >
-              <h3 class="mb-3 post-title">
-                Creating an object that travels at 1% the speed of light?
-              </h3>
-            </a>
-            <p>
-              Light is fast. In fact, it is the fastest thing that exists, and a
-              law of the universe is that nothing can move faster than light.
-              Light travels at …
-            </p>
-          </div>
-          <div class="card-footer border-top-0 bg-transparent p-0">
-            <ul class="card-meta list-inline">
-              <li class="list-inline-item mt-2">
-                <a
-                  href="author-single.html"
-                  class="card-meta-author"
-                  title="Read all posts by - Chris Impey"
-                >
-                  <img
-                    class="w-auto"
-                    src="assets/assets/images/author/chris-impey.jpg"
-                    alt="Chris Impey"
-                    width="26"
-                    height="26"
-                  />
-                  by <span>Chris</span>
-                </a>
-              </li>
-              <li class="list-inline-item mt-2">•</li>
-              <li class="list-inline-item mt-2">
-                <ul class="card-meta-tag list-inline">
-                  <li class="list-inline-item small">
-                    <a href="tag-single.html">Life</a>
-                  </li>
-                  <li class="list-inline-item small">
-                    <a href="tag-single.html">Lighting</a>
-                  </li>
-                </ul>
-              </li>
-            </ul>
-          </div>
-        </article>
-      </div>
-      <div class="col-lg-6">
-        <article class="card post-card h-100 border-0 bg-transparent">
-          <div class="card-body">
-            <a
-              class="d-block"
-              href="blog-single.html"
-              title="Everything you wanted to know about the metaverse"
-            >
-              <div class="post-image position-relative">
-                <img
-                  class="w-100 h-auto rounded"
-                  src="assets/assets/images/blog/04.jpg"
-                  alt="Everything you wanted to know about the metaverse"
-                  width="970"
-                  height="500"
-                />
-              </div>
-            </a>
-            <ul class="card-meta list-inline mb-3">
-              <li class="list-inline-item mt-2">
-                <i class="ti ti-calendar-event"></i>
-                <span>16 Nov, 2021</span>
-              </li>
-              <li class="list-inline-item mt-2">—</li>
-              <li class="list-inline-item mt-2">
-                <i class="ti ti-clock"></i>
-                <span>01 min read</span>
-              </li>
-            </ul>
-            <a
-              class="d-block"
-              href="blog-single.html"
-              title="Everything you wanted to know about the metaverse"
-            >
-              <h3 class="mb-3 post-title">
-                Everything you wanted to know about the metaverse
-              </h3>
-            </a>
-            <p>
-              In the wake of Facebook rebranding as Meta, reflecting its focus
-              on the “metaverse”, Microsoft has now announced it, too, will
-              launch into this space. …
-            </p>
-          </div>
-          <div class="card-footer border-top-0 bg-transparent p-0">
-            <ul class="card-meta list-inline">
-              <li class="list-inline-item mt-2">
-                <a
-                  href="author-single.html"
-                  class="card-meta-author"
-                  title="Read all posts by - Emma Hazel"
-                >
-                  <img
-                    class="w-auto"
-                    src="assets/assets/images/author/emma-hazel.jpg"
-                    alt="Emma Hazel"
-                    width="26"
-                    height="26"
-                  />
-                  by <span>Emma</span>
-                </a>
-              </li>
-              <li class="list-inline-item mt-2">•</li>
-              <li class="list-inline-item mt-2">
-                <ul class="card-meta-tag list-inline">
-                  <li class="list-inline-item small">
-                    <a href="tag-single.html">Life</a>
-                  </li>
-                </ul>
-              </li>
-            </ul>
-          </div>
-        </article>
-      </div>
-      <div class="col-lg-6">
-        <article class="card post-card h-100 border-0 bg-transparent">
-          <div class="card-body">
-            <a
-              class="d-block"
-              href="blog-single.html"
-              title="How to hire a developer straight out of bootcamp — without getting burned"
-            >
-              <div class="post-image position-relative">
-                <img
-                  class="w-100 h-auto rounded"
-                  src="assets/assets/images/blog/07.jpg"
-                  alt="How to hire a developer straight out of bootcamp — without getting burned"
-                  width="970"
-                  height="500"
-                />
-              </div>
-            </a>
-            <ul class="card-meta list-inline mb-3">
-              <li class="list-inline-item mt-2">
-                <i class="ti ti-calendar-event"></i>
-                <span>15 Nov, 2021</span>
-              </li>
-              <li class="list-inline-item mt-2">—</li>
-              <li class="list-inline-item mt-2">
-                <i class="ti ti-clock"></i>
-                <span>03 min read</span>
-              </li>
-            </ul>
-            <a
-              class="d-block"
-              href="blog-single.html"
-              title="How to hire a developer straight out of bootcamp — without getting burned"
-            >
-              <h3 class="mb-3 post-title">
-                How to hire a developer straight out of bootcamp — without
-                getting burned
-              </h3>
-            </a>
-            <p>
-              There’s a worldwide talent shortage in software development, and
-              nearly one-third of hiring managers have hired someone from a
-              coding bootcamp to help …
-            </p>
-          </div>
-          <div class="card-footer border-top-0 bg-transparent p-0">
-            <ul class="card-meta list-inline">
-              <li class="list-inline-item mt-2">
-                <a
-                  href="author-single.html"
-                  class="card-meta-author"
-                  title="Read all posts by - Chris Impey"
-                >
-                  <img
-                    class="w-auto"
-                    src="assets/assets/images/author/chris-impey.jpg"
-                    alt="Chris Impey"
-                    width="26"
-                    height="26"
-                  />
-                  by <span>Chris</span>
-                </a>
-              </li>
-              <li class="list-inline-item mt-2">•</li>
-              <li class="list-inline-item mt-2">
-                <ul class="card-meta-tag list-inline">
-                  <li class="list-inline-item small">
-                    <a href="tag-single.html">Lifestyle</a>
-                  </li>
-                  <li class="list-inline-item small">
-                    <a href="tag-single.html">Startups</a>
-                  </li>
-                </ul>
-              </li>
-            </ul>
-          </div>
-        </article>
-      </div>
-      <div class="col-lg-6">
-        <article class="card post-card h-100 border-0 bg-transparent">
-          <div class="card-body">
-            <a
-              class="d-block"
-              href="blog-single.html"
-              title="Why developers are so divided over WordPress"
-            >
-              <div class="post-image position-relative">
-                <img
-                  class="w-100 h-auto rounded"
-                  src="assets/assets/images/blog/09.jpg"
-                  alt="Why developers are so divided over WordPress"
-                  width="970"
-                  height="500"
-                />
-              </div>
-            </a>
-            <ul class="card-meta list-inline mb-3">
-              <li class="list-inline-item mt-2">
-                <i class="ti ti-calendar-event"></i>
-                <span>12 Oct, 2020</span>
-              </li>
-              <li class="list-inline-item mt-2">—</li>
-              <li class="list-inline-item mt-2">
-                <i class="ti ti-clock"></i>
-                <span>03 min read</span>
-              </li>
-            </ul>
-            <a
-              class="d-block"
-              href="blog-single.html"
-              title="Why developers are so divided over WordPress"
-            >
-              <h3 class="mb-3 post-title">
-                Why developers are so divided over WordPress
-              </h3>
-            </a>
-            <p>
-              After seeing WordPress top the most dreaded platform on Stack
-              Overflow’s Developer Survey for two years in a row (2019 and
-              2020), a few weeks ago we …
-            </p>
-          </div>
-          <div class="card-footer border-top-0 bg-transparent p-0">
-            <ul class="card-meta list-inline">
-              <li class="list-inline-item mt-2">
-                <a
-                  href="author-single.html"
-                  class="card-meta-author"
-                  title="Read all posts by - Thomas Macaulay"
-                >
-                  <img
-                    class="w-auto"
-                    src="assets/assets/images/author/thomas-macaulay.jpg"
-                    alt="Thomas Macaulay"
-                    width="26"
-                    height="26"
-                  />
-                  by <span>Thomas</span>
-                </a>
-              </li>
-              <li class="list-inline-item mt-2">•</li>
-              <li class="list-inline-item mt-2">
-                <ul class="card-meta-tag list-inline">
-                  <li class="list-inline-item small">
-                    <a href="tag-single.html">Work</a>
-                  </li>
-                  <li class="list-inline-item small">
-                    <a href="tag-single.html">Lifestyle</a>
-                  </li>
-                </ul>
-              </li>
-            </ul>
-          </div>
-        </article>
-      </div>
-      <div class="col-lg-6">
-        <article class="card post-card h-100 border-0 bg-transparent">
-          <div class="card-body">
-            <a
-              class="d-block"
-              href="blog-single.html"
-              title="Why everyone is talking about ‘green steel’ at COP26"
-            >
-              <div class="post-image position-relative">
-                <img
-                  class="w-100 h-auto rounded"
-                  src="assets/assets/images/blog/06.jpg"
-                  alt="Why everyone is talking about ‘green steel’ at COP26"
-                  width="970"
-                  height="500"
-                />
-              </div>
-            </a>
-            <ul class="card-meta list-inline mb-3">
-              <li class="list-inline-item mt-2">
-                <i class="ti ti-calendar-event"></i>
-                <span>14 Sep, 2020</span>
-              </li>
-              <li class="list-inline-item mt-2">—</li>
-              <li class="list-inline-item mt-2">
-                <i class="ti ti-clock"></i>
-                <span>03 min read</span>
-              </li>
-            </ul>
-            <a
-              class="d-block"
-              href="blog-single.html"
-              title="Why everyone is talking about ‘green steel’ at COP26"
-            >
-              <h3 class="mb-3 post-title">
-                Why everyone is talking about ‘green steel’ at COP26
-              </h3>
-            </a>
-            <p>
-              Among the rhetoric of climate change bingo and platitudes, there’s
-              a term I’ve been hearing a lot at COP26 this week — green steel.
-              But what is it, …
-            </p>
-          </div>
-          <div class="card-footer border-top-0 bg-transparent p-0">
-            <ul class="card-meta list-inline">
-              <li class="list-inline-item mt-2">
-                <a
-                  href="author-single.html"
-                  class="card-meta-author"
-                  title="Read all posts by - Thomas Macaulay"
-                >
-                  <img
-                    class="w-auto"
-                    src="assets/assets/images/author/thomas-macaulay.jpg"
-                    alt="Thomas Macaulay"
-                    width="26"
-                    height="26"
-                  />
-                  by <span>Thomas</span>
-                </a>
-              </li>
-              <li class="list-inline-item mt-2">•</li>
-              <li class="list-inline-item mt-2">
-                <ul class="card-meta-tag list-inline">
-                  <li class="list-inline-item small">
-                    <a href="tag-single.html">Lifestyle</a>
-                  </li>
-                </ul>
-              </li>
-            </ul>
-          </div>
-        </article>
-      </div>
-      <div class="col-12 text-center">
-        <a
-          class="btn btn-primary mt-5"
-          routerLink="home"
-          aria-label="View all posts"
-          ><i class="ti ti-new-section me-2"></i>View all posts</a
-        >
-      </div>
-    </div>
-  </div>
-</section>

@@ -36,13 +36,19 @@ const register = async (req, res) => {
     const salt = await bcrypt.genSalt(10);
     const hashPassword = await bcrypt.hash(password, salt);
 
-    await Author.create({ username, email, password: hashPassword, image });
+    const author = await Author.create({
+      username,
+      email,
+      password: hashPassword,
+      image,
+    });
     const payload = { email, password };
     const token = generateToken(payload);
     return res.status(200).json({
       author: {
         token,
         email,
+        authorId: author._id,
       },
     });
   } catch (error) {
@@ -71,7 +77,9 @@ const login = async (req, res) => {
 
     const payload = { email, password };
     const token = generateToken(payload);
-    return res.status(200).json({ author: { token, email } });
+    return res
+      .status(200)
+      .json({ author: { token, email, authorId: author._id } });
   } catch (error) {
     console.log(error.message);
     return res.status(500).json({ error: error.message });
@@ -118,7 +126,8 @@ const updateAuthor = async (req, res) => {
     return res.status(500).json({ error: error.message });
   }
 
-  // TODO : update article
+  // TODO : store image on Cloudinary / remove from Cloudinary
+  // not remove from local if production
 };
 
 const deleteAuthor = async (req, res) => {

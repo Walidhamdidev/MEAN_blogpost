@@ -2,29 +2,50 @@
   <h2 class="text-center">Create article</h2>
 
   <div class="col-6 mx-auto">
-    <input type="text" class="form-control m-1" placeholder="title" />
+    <input
+      [(ngModel)]="article.title"
+      type="text"
+      class="form-control m-1"
+      placeholder="title"
+    />
     <ul>
       <li>tag</li>
     </ul>
     <div class="row m-1">
-      <input type="text" class="form-control w-75" placeholder="tag" />
-      <button class="btn btn-dark w-25">Add</button>
+      <input
+        [(ngModel)]="article.tag"
+        type="text"
+        class="form-control w-75"
+        placeholder="tag"
+      />
+      <button (click)="addTag()" class="btn btn-dark w-25">Add</button>
     </div>
 
-    <input type="file" class="form-control m-1" placeholder="image" />
+    <input
+      (change)="selectFile($event)"
+      type="file"
+      class="form-control m-1"
+      placeholder="image"
+    />
     <textarea
       title=""
       id=""
       cols="30"
       rows="4"
+      [(ngModel)]="article.description"
       placeholder="description"
       class="form-control m-1"
     ></textarea>
 
     <div class="m-1">
-      <textarea [placeholder]="'Enter text here...'"></textarea>
+      <textarea
+        [(ngModel)]="article.content"
+        [placeholder]="'Enter text here...'"
+      ></textarea>
     </div>
 
-    <button class="btn btn-dark form-control m-1">create</button>
+    <button (click)="create()" class="btn btn-dark form-control m-1">
+      create
+    </button>
   </div>
 </div>

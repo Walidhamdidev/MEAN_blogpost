@@ -4,22 +4,28 @@ const ArticleSchema = new mongoose.Schema(
   {
     title: {
       type: String,
+      required: true,
     },
-    idAuthor: {
+    authorId: {
       type: String,
+      required: true,
     },
     description: {
       type: String,
+      required: true,
     },
 
     content: {
       type: String,
+      required: true,
     },
     image: {
       type: String,
+      required: true,
     },
     tags: {
       type: Array,
+      required: true,
     },
   },
   { timestamps: true }
