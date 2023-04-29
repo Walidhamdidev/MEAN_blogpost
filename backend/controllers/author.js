@@ -1,37 +1,47 @@
-import Author from "../models/author.js";
-import JWT from "jsonwebtoken";
 import bcrypt from "bcrypt";
-import fs from "fs";
 
-const generateToken = (payload) => {
-  const JWTSecret = process.env.JWT_SECRET;
-  const token = JWT.sign(payload, JWTSecret, { expiresIn: "3d" });
-  return token;
-};
+import Author from "../models/author.js";
+import authorValidations from "../validators/author.js";
+import cloudinary from "./cloudinary.js";
+import localStorage from "./localStorage.js";
+import utils from "../utils/index.js";
 
-const removeImageFromStorage = (author) => {
-  fs.unlink(`./uploads/author/${author.image}`, (err) => {
-    if (err) {
-      console.error(err);
-      return;
-    }
-    console.log(`${author.image} has been deleted`);
-  });
-};
+const NODE_ENV = process.env.NODE_ENV;
 
 const register = async (req, res) => {
-  const { username, email, password, image } = req.body;
-
-  if (!username)
-    return res.status(400).json({ error: "Please enter username." });
-  if (!email) return res.status(400).json({ error: "Please enter email." });
-  if (!password)
-    return res.status(400).json({ error: "Please enter password." });
-  if (!image) return res.status(400).json({ error: "Please add image." });
+  const { username, email, password, about, image } = req.body;
 
   try {
+    // check if the email is in use
     const exists = await Author.findOne({ email });
     if (exists) return res.status(401).json({ error: "Email already in use." });
+
+    // upload the image to cloudinary if production mode
+    let imageSource = image;
+    if (NODE_ENV === "production") {
+      // allow uploading only if all the fields not empty
+      if (!username || !email || !password || !about)
+        return res.status(400).json({
+          error: "Add all fields then the Image.",
+        });
+      const imgObj = await cloudinary.uploadImage(image, "author");
+      imageSource = {
+        url: imgObj.url.toString(),
+        public_id: imgObj.public_id.toString(),
+      };
+    }
+
+    // check error
+    const { error } = authorValidations.signupSchema.validate({
+      username,
+      email,
+      password,
+      about,
+      image: imageSource,
+    });
+    if (error) {
+      return res.status(400).send(error.details[0].message);
+    }
 
     const salt = await bcrypt.genSalt(10);
     const hashPassword = await bcrypt.hash(password, salt);
@@ -40,10 +50,11 @@ const register = async (req, res) => {
       username,
       email,
       password: hashPassword,
-      image,
+      about,
+      image: JSON.stringify(imageSource),
     });
     const payload = { email, password };
-    const token = generateToken(payload);
+    const token = utils.generateToken(payload);
     return res.status(200).json({
       author: {
         token,
@@ -59,10 +70,16 @@ const register = async (req, res) => {
 
 const login = async (req, res) => {
   const { email, password } = req.body;
-  if (!email) return res.status(401).json({ error: "Please enter email." });
-  if (!password) {
-    return res.status(401).json({ error: "Please enter password." });
+
+  const { error } = authorValidations.signinSchema.validate({
+    email,
+    password,
+  });
+
+  if (error) {
+    return res.status(400).send(error.details[0].message);
   }
+
   try {
     const author = await Author.findOne({ email });
     if (!author)
@@ -76,7 +93,7 @@ const login = async (req, res) => {
         .json({ erorr: "There is no author with this password." });
 
     const payload = { email, password };
-    const token = generateToken(payload);
+    const token = utils.generateToken(payload);
     return res
       .status(200)
       .json({ author: { token, email, authorId: author._id } });
@@ -105,37 +122,69 @@ const getAll = async (req, res) => {
     return res.status(500).json({ error: error.message });
   }
 };
+
+// TODO: update author
+// finish article API
+
 const updateAuthor = async (req, res) => {
   const { id } = req.params;
   const data = req.body;
-  if (data.image) {
-    const author = await Author.findById(id);
-    if (author.image) {
-      removeImageFromStorage(author);
-    }
-  }
+
   try {
-    const author = await Author.findOneAndUpdate(
+    // update image
+    if (data.image) {
+      const author = await Author.findById(id);
+      if (author && author.image) {
+        if (NODE_ENV === "production") {
+          const imgObj = await updateImage(
+            "author",
+            JSON.parse(author.image).public_id,
+            data.image
+          );
+          data.image = JSON.stringify({
+            url: imgObj.url,
+            public_id: imgObj.public_id,
+          });
+        } else {
+          localStorage.updateImage("author", author, data.image);
+        }
+      }
+    }
+    // check validation errors
+    const { error } = authorValidations.updateSchema.validate(data);
+    if (error) {
+      return res.status(400).send(error.details[0].message);
+    }
+
+    const updatedAuthor = await Author.findOneAndUpdate(
       { _id: id },
       { ...data },
       { new: true }
     );
-    return res.status(200).json(author);
+
+    return res.status(200).json(updatedAuthor);
   } catch (error) {
     console.log(error);
     return res.status(500).json({ error: error.message });
   }
-
-  // TODO : store image on Cloudinary / remove from Cloudinary
-  // not remove from local if production
 };
 
 const deleteAuthor = async (req, res) => {
   const { id } = req.params;
   try {
     const author = await Author.findOneAndDelete({ _id: id });
-    removeImageFromStorage(author);
-    return res.status(200).json({ msg: "Deleted." });
+    if (!author)
+      return res.status(401).json({
+        msg: "This author with this id either has been deletedd or not exists.",
+      });
+    console.log(author.image);
+    if (NODE_ENV === "production") {
+      console.log(JSON.parse(author.image));
+      cloudinary.deleteImage(JSON.parse(author.image).public_id);
+    } else {
+      localStorage.removeImage("author", author);
+    }
+    return res.status(200).json({ msg: "Author has been deleted." });
   } catch (error) {
     console.log(error);
     return res.status(500).json({ error: error.message });

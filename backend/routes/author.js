@@ -4,6 +4,7 @@ import author from "../controllers/author.js";
 import fileUploadMiddleware from "../middleware/upload.js";
 
 const router = express.Router();
+
 router.post("/signIn", author.login);
 router.post(
   "/signUp",

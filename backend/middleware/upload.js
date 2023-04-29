@@ -1,17 +1,4 @@
 import multer from "multer";
-import { v2 as cloudinary } from "cloudinary";
-
-const uploadToCloudinary = async (path, filename) => {
-  try {
-    const result = await cloudinary.uploader.upload(filename, {
-      upload_preset: path.split("/")[2],
-    });
-    console.log(result);
-  } catch (error) {
-    console.log(error);
-  }
-};
-
 const fileUploadMiddleware = (path) => {
   const storage = multer.diskStorage({
     destination: process.env.NODE_ENV === "production" ? null : path,
@@ -26,9 +13,7 @@ const fileUploadMiddleware = (path) => {
   return [
     upload.any("image"),
     (req, res, next) => {
-      if (process.env.NODE_ENV === "production") {
-        uploadToCloudinary(path, req.body.image);
-      }
+      if (req.files && req.files.length) req.body.image = req.files[0].path;
       next();
     },
   ];
